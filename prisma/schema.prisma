@@ -1,0 +1,166 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model referencia {
+  id         Int     @id @default(autoincrement())
+  referencia String?
+  valor      String?
+
+  @@map("_referencia")
+}
+
+model cnae {
+  id        Int     @id @default(autoincrement())
+  codigo    String?
+  descricao String?
+
+  @@index([codigo], map: "idx_cnae")
+}
+
+model empresas {
+  id                          Int     @id @default(autoincrement())
+  cnpj_basico                 String?
+  razao_social                String?
+  natureza_juridica           String?
+  qualificacao_responsavel    String?
+  porte_empresa               String?
+  ente_federativo_responsavel String?
+  capital_social              Float?
+
+  @@index([razao_social], map: "idx_empresas_razao_social")
+  @@index([cnpj_basico], map: "idx_empresas_cnpj_basico")
+}
+
+model estabelecimento {
+  id                        Int     @id @default(autoincrement())
+  cnpj_basico               String?
+  matriz_filial             String?
+  nome_fantasia             String?
+  situacao_cadastral        String?
+  data_situacao_cadastral   String?
+  motivo_situacao_cadastral String?
+  nome_cidade_exterior      String?
+  pais                      String?
+  data_inicio_atividades    String?
+  cnae_fiscal               String?
+  cnae_fiscal_secundaria    String?
+  tipo_logradouro           String?
+  logradouro                String?
+  numero                    String?
+  complemento               String?
+  bairro                    String?
+  cep                       String?
+  uf                        String?
+  municipio                 String?
+  ddd1                      String?
+  telefone1                 String?
+  ddd2                      String?
+  telefone2                 String?
+  ddd_fax                   String?
+  fax                       String?
+  correio_eletronico        String?
+  situacao_especial         String?
+  data_situacao_especial    String?
+  cnpj                      String?
+
+  @@index([nome_fantasia], map: "idx_estabelecimento_nomefantasia")
+  @@index([cnpj], map: "idx_estabelecimento_cnpj")
+  @@index([cnpj_basico], map: "idx_estabelecimento_cnpj_basico")
+}
+
+model motivo {
+  id        Int     @id @default(autoincrement())
+  codigo    String?
+  descricao String?
+
+  @@index([codigo], map: "idx_motivo")
+}
+
+model municipio {
+  id        Int     @id @default(autoincrement())
+  codigo    String?
+  descricao String?
+
+  @@index([codigo], map: "idx_municipio")
+}
+
+model natureza_juridica {
+  id        Int     @id @default(autoincrement())
+  codigo    String?
+  descricao String?
+
+  @@index([codigo], map: "idx_natureza_juridica")
+}
+
+model pais {
+  id        Int     @id @default(autoincrement())
+  codigo    String?
+  descricao String?
+
+  @@index([codigo], map: "idx_pais")
+}
+
+model qualificacao_socio {
+  id        Int     @id @default(autoincrement())
+  codigo    String?
+  descricao String?
+
+  @@index([codigo], map: "idx_qualificacao_socio")
+}
+
+model simples {
+  id                    Int     @id @default(autoincrement())
+  cnpj_basico           String?
+  opcao_simples         String?
+  data_opcao_simples    String?
+  data_exclusao_simples String?
+  opcao_mei             String?
+  data_opcao_mei        String?
+  data_exclusao_mei     String?
+
+  @@index([cnpj_basico], map: "idx_simples_cnpj_basico")
+}
+
+model socios {
+  id                               Int     @id @default(autoincrement())
+  cnpj                             String?
+  cnpj_basico                      String?
+  identificador_de_socio           String?
+  nome_socio                       String?
+  cnpj_cpf_socio                   String?
+  qualificacao_socio               String?
+  data_entrada_sociedade           String?
+  pais                             String?
+  representante_legal              String?
+  nome_representante               String?
+  qualificacao_representante_legal String?
+  faixa_etaria                     String?
+
+  @@index([nome_socio], map: "idx_socios_nome_socio")
+  @@index([cnpj_cpf_socio], map: "idx_socios_cnpj_cpf_socio")
+  @@index([cnpj], map: "idx_socios_cnpj")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Company {
+  id        String   @id @default(uuid())
+  name      String
+  cnpj      String   @unique
+  address   String?
+  phone     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

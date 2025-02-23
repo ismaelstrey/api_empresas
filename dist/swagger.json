@@ -1,0 +1,198 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "BAC Empresas API",
+    "version": "1.0.0",
+    "description": "API para consulta e gerenciamento de dados empresariais"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001/api",
+      "description": "Development server"
+    }
+  ],
+  "paths": {
+    "/empresas": {
+      "get": {
+        "summary": "Lista todas as empresas",
+        "responses": {
+          "200": {
+            "description": "Lista de empresas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Empresa"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria uma nova empresa",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmpresaInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Empresa criada com sucesso"
+          }
+        }
+      }
+    },
+    "/empresas/{id}": {
+      "get": {
+        "summary": "Retorna uma empresa específica",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dados da empresa"
+          }
+        }
+      }
+    },
+    "/estabelecimentos": {
+      "get": {
+        "summary": "Lista todos os estabelecimentos",
+        "responses": {
+          "200": {
+            "description": "Lista de estabelecimentos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Estabelecimento"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria um novo estabelecimento",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EstabelecimentoInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Estabelecimento criado com sucesso"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Empresa": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "cnpj_basico": {
+            "type": "string"
+          },
+          "razao_social": {
+            "type": "string"
+          },
+          "natureza_juridica": {
+            "type": "string"
+          },
+          "qualificacao_responsavel": {
+            "type": "string"
+          },
+          "porte_empresa": {
+            "type": "string"
+          }
+        }
+      },
+      "EmpresaInput": {
+        "type": "object",
+        "required": ["cnpj_basico", "razao_social"],
+        "properties": {
+          "cnpj_basico": {
+            "type": "string"
+          },
+          "razao_social": {
+            "type": "string"
+          },
+          "natureza_juridica": {
+            "type": "string"
+          },
+          "qualificacao_responsavel": {
+            "type": "string"
+          },
+          "porte_empresa": {
+            "type": "string"
+          }
+        }
+      },
+      "Estabelecimento": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "cnpj_basico": {
+            "type": "string"
+          },
+          "nome_fantasia": {
+            "type": "string"
+          },
+          "situacao_cadastral": {
+            "type": "string"
+          },
+          "cnae_fiscal": {
+            "type": "string"
+          }
+        }
+      },
+      "EstabelecimentoInput": {
+        "type": "object",
+        "required": ["cnpj_basico", "nome_fantasia"],
+        "properties": {
+          "cnpj_basico": {
+            "type": "string"
+          },
+          "nome_fantasia": {
+            "type": "string"
+          },
+          "situacao_cadastral": {
+            "type": "string"
+          },
+          "cnae_fiscal": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
